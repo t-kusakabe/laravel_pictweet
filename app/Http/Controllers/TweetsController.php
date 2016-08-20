@@ -22,7 +22,7 @@ class TweetsController extends Controller
     public function show($id)
     {
         $tweet = Tweet::findOrFail($id);
-        $comments = Comment::all();
+        $comments = $tweet->comments()->get();
         return view('tweets.show', compact('tweet', 'comments'));
     }
 
