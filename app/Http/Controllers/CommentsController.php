@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Comment;
+use App\Tweet;
 use Auth;
 
 class CommentsController extends Controller
 {
     public function store($id, Request $request)
     {
-        $comment = Comment::create([
+    	$tweet = Tweet::findOrFail($id);
+    	$tweet->comments()->create([
             'user_id' => Auth::user()->id,
-            'tweet_id' => $id,
             'text' => $request->text
         ]);
 
-        return redirect("tweets/{$comment->tweet->id}");
+        return redirect("tweets/{$tweet->id}");
     }
 }
